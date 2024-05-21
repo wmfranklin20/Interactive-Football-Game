@@ -9,6 +9,7 @@ import SceneInit from './src/model/SceneInit';
 import windowResize from './src/utils/HandleWindowResize';
 import {ThrePointSpotLight, ambientLight} from './src/model/Lighting';
 import { Plane, Cylinder } from './src/model/BaseGeometry';
+import { onPointerHover } from './src/model/Interaction';
 
 //Initialize Scene
 const { scene, sceneContainer, renderer, camera, controls } = SceneInit();
@@ -22,7 +23,7 @@ ThrePointSpotLight('rgb(244,244,239)', 250, 100, -100, 300, scene);
 let pitchLength = 340
 let pitchWidth = 220
 //Generic Three Objects
-Plane(scene, pitchLength, pitchWidth);
+Plane(scene, pitchLength, pitchWidth, 'Pitch');
 
 let firstLine = 30
 let midLine = (pitchLength / 2) - 100
@@ -139,7 +140,54 @@ function fourfourtwo(side) {
 }
 
 fourthreethree('home');
-threefourthree('away');
+fourfourtwo('away');
+
+let meshChildren = []
+let pitchMesh
+let plane = new THREE.Plane()
+let planeIntersect = new THREE.Vector3()
+scene.children.forEach((child) => {
+    if (child instanceof THREE.Mesh && child.name !== 'Pitch') {
+        meshChildren.push(child)
+    } else if (child instanceof THREE.Mesh && child.name === 'Pitch') {
+        pitchMesh = child
+    }
+})
+
+
+window.addEventListener('mousemove', function(event) {
+    let hovered = onPointerHover(event, meshChildren, camera)
+    let pitchIntersect = hovered.raycaster.intersectObject(pitchMesh)
+    if (dragObject !== null) {
+        if (pitchIntersect.length !== 0) {
+            dragObject.position.x = pitchIntersect[0].point.x
+            dragObject.position.y = pitchIntersect[0].point.y
+            return
+        }
+        console.log(pitchIntersect.point)
+        if (hovered.firstIntersected !== null) {
+            if (dragObject !== null) {
+                if (pitchIntersect.length !== 0) {
+                    dragObject.position.set(pitchIntersect[0].point)
+                }
+            }
+            
+        }
+    }
+})
+
+let dragObject = null
+window.addEventListener('pointerdown', function(){
+    let hovered = onPointerHover(event, meshChildren, camera)
+    if (hovered.firstIntersected !== null) {
+        dragObject = hovered.firstIntersected
+        controls.enabled = false
+    }
+})
+window.addEventListener('pointerup', function(){
+    dragObject = null
+    controls.enabled = true
+})
 
 //Window Resize
 windowResize(camera, renderer, sceneContainer);
@@ -155,4 +203,4 @@ function animate() {
 }
 animate();
 
-//console.log(scene)
+console.log(scene)

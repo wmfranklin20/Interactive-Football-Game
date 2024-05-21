@@ -23,7 +23,7 @@ export function onPointerHover(event, target, camera) {
     } else {    
         firstIntersected = null
     };
-    return (firstIntersected)
+    return {firstIntersected, pointer, raycaster}
 }
 
 export function onPointerClick (event, target, camera) {
@@ -56,5 +56,6 @@ export function hoverColor(item, objects, mats, color) {
         }
     }
 }
+
 
 export default {onPointerHover}
