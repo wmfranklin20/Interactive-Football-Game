@@ -1,4 +1,4 @@
-import { DynamicNavBar, NavBarButton } from "/src/ui/NavBar";
+import { DynamicNavBar, NavBarButton } from "/src/ui/navbar";
 
 
 window.addEventListener('resize', function() {
