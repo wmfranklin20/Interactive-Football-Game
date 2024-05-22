@@ -5,11 +5,11 @@ import { OrbitControls } from 'https://unpkg.com/three@0.164.1/examples/jsm/cont
 import { Tween } from 'https://unpkg.com/three@0.164.1/examples/jsm/libs/tween.module.js'
 
 //Function Imports
-import SceneInit from '/src/model/sceneinit';
-import windowResize from '/src/utils/handlewindowresize';
-import {ThrePointSpotLight, ambientLight} from '/src/model/lighting';
-import { Plane, Cylinder } from '/src/model/basegeometry';
-import { onPointerHover } from '/src/model/interaction';
+import SceneInit from '/src/model/sceneinit.js';
+import windowResize from '/src/utils/handlewindowresize,js';
+import {ThrePointSpotLight, ambientLight} from '/src/model/lighting.js';
+import { Plane, Cylinder } from '/src/model/basegeometry.js';
+import { onPointerHover } from '/src/model/interaction.js';
 
 //Initialize Scene
 const { scene, sceneContainer, renderer, camera, controls } = SceneInit();
