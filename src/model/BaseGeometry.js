@@ -10,6 +10,7 @@ export function Plane(scene, length, width, name) {
     plane.material.roughness = .95
     plane.name = name
     scene.add( plane )
+    plane.visible = false
 }
 
 export function Cylinder(scene, x, y, color) {

@@ -5,11 +5,12 @@ import { OrbitControls } from 'https://unpkg.com/three@0.164.1/examples/jsm/cont
 import { Tween } from 'https://unpkg.com/three@0.164.1/examples/jsm/libs/tween.module.js'
 
 //Function Imports
-import SceneInit from 'src/model/SceneInit';
-import windowResize from 'src/utils/HandleWindowResize';
-import {ThrePointSpotLight, ambientLight} from 'src/model/Lighting';
-import { Plane, Cylinder } from 'src/model/BaseGeometry';
-import { onPointerHover } from 'src/model/Interaction';
+import SceneInit from './src/model/SceneInit';
+import windowResize from './src/utils/HandleWindowResize';
+import {ThrePointSpotLight, ambientLight} from './src/model/Lighting';
+import { Plane, Cylinder } from './src/model/BaseGeometry';
+import { onPointerHover } from './src/model/Interaction';
+import Load3dm, { fetch3DMCombined } from './src/model/Load3dm';
 
 //Initialize Scene
 const { scene, sceneContainer, renderer, camera, controls } = SceneInit();
@@ -23,6 +24,8 @@ ThrePointSpotLight('rgb(244,244,239)', 250, 100, -100, 300, scene);
 let pitchLength = 340
 let pitchWidth = 220
 //Generic Three Objects
+let pitch = await fetch3DMCombined('public/Soccer-Pitch.3dm', false, true)
+scene.add(pitch.object)
 Plane(scene, pitchLength, pitchWidth, 'Pitch');
 
 let firstLine = 30
